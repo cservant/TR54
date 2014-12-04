@@ -1,4 +1,4 @@
 TR54
 ====
 
-TR54 porject on EV3 robots
+TR54 project on EV3 robots
