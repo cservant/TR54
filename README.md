@@ -1,9 +1,9 @@
 Nowadays drivers are the weakness of our road safety policy. To improve our road safety we work on a well known solution : autonomous vehicles.
 The problem raised by this solution is "How to syncronize the different vehicles to optimize the time inside the crossroads and have the best traffic ?"
 
-There are many possibilities to answer this quesiton. The three main ones are :
+There are many possibilities to answer this question. The three main ones are :
 - Time synchronisation in terms of roads (principle of our traffic lights)
-- Sequential synchronisaiton (we attribute resource to vehicles instead of roads)
+- Sequential synchronisation (we attribute resource to vehicles instead of roads)
 - One by One (each vehicle is communicating with all its neighbors and negociating its own authorization)
 
 The project is divided in 2 parts : 
