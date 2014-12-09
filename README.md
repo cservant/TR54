@@ -1,5 +1,5 @@
 Nowadays drivers are the weakness of our road safety policy. To improve our road safety we work on a well known solution : autonomous vehicles.
-The problem raised by this solution is "How to synchronize the different vehicles to optimize the time inside the crossroads and have the best traffic ?"
+The problem raised by this solution is "How to synchronize the different vehicles to optimize the time inside the crossroads and have the best traffic without any security fault ?"
 
 There are many possibilities to answer this question. The three main ones are :
 - Time synchronization in terms of roads (principle of our traffic lights)
