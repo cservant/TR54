@@ -15,6 +15,7 @@ public class iRobot extends Robot{
 	private Point point = new Point(0,0); //this point will be updated as the entry point of the main roads
 	final private WifiCommunication wifi = new WifiCommunication();
 	private boolean isAuthorized = false; //boolean used in the wifipooler to check the current authorization of our robot
+	private boolean hasRequested = false; //boolean used to delay the wifi request
 	private String id = "192.168.43.129"; //Robot Ip address
 	
 	public void navigation() {
@@ -66,22 +67,25 @@ public class iRobot extends Robot{
 					//send request for the crossroad
 					// "R" : request to enter the crossroad
 					// "O" : notification robot leaved the crossroad
-					try {
-						//we send an UDP packet to our android device (hotspot wifi ip address is always the same)
-						wifi.sendUDP("192.168.43.1", "R");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						showMsg("Err : sendUDP");
-					}				
+					if(!hasRequested){
+						try {
+							//we send an UDP packet to our android device (hotspot wifi ip address is always the same)
+							wifi.sendUDP("192.168.43.1", "R");
+							hasRequested = true;
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							showMsg("Err : sendUDP");
+						}
+					}
 					
 					//showMsg("dist : " + opp.getPose().distanceTo(point));
 					//check if we are close to the crossroad
 					if(opp.getPose().distanceTo(point) >= 40)
 					{
+						showMsg("Waiting for Auth");
 						//check isAuthorized to know if we received authorization from the server
 						while(!isAuthorized){
-							showMsg("Waiting for Auth");
 							df.stop();
 						}
 						stop = true;
@@ -91,6 +95,7 @@ public class iRobot extends Robot{
 						showMsg("Out");
 						try{
 							wifi.sendUDP("192.168.43.1", "O");
+							hasRequested = false;
 						} catch (IOException e){
 							e.printStackTrace();
 							showMsg("err : SendUDP");
@@ -131,7 +136,7 @@ public class iRobot extends Robot{
 					
 					//check if our ip address is contained in the packet we received
 					int i =0;
-					while(!str[i].contains(id))
+					while( (i < str.length] && !str[i].contains(id))
 						i++;
 					
 					//if we didn't find our ip address
