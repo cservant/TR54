@@ -73,14 +73,10 @@ public class iRobot extends Robot{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						showMsg("Err : sendUDP");
-					}
-					
-					//receive answer from server
-					//receive list of authorized robot
-					//check if this robot is contained in this list
-					
+					}				
 					
 					//showMsg("dist : " + opp.getPose().distanceTo(point));
+					//check if we are close to the crossroad
 					if(opp.getPose().distanceTo(point) >= 40)
 					{
 						//check isAuthorized to know if we received authorization from the server
@@ -88,9 +84,17 @@ public class iRobot extends Robot{
 							showMsg("Waiting for Auth");
 							df.stop();
 						}
-							
-
 						stop = true;
+					}
+					//notify the server we get out of the crossroad
+					if(opp.getPose().distanceTo(point) >= 80){
+						showMsg("Out");
+						try{
+							wifi.sendUDP("192.168.43.1", "O");
+						} catch (IOException e){
+							e.printStackTrace();
+							showMsg("err : SendUDP");
+						}
 					}
 					df.forward();
 				}
@@ -148,5 +152,6 @@ public class iRobot extends Robot{
 				showMsg("Err : receiveUDP");
 			}
 		}
+
 	}
 }
