@@ -79,8 +79,8 @@ public class iRobot extends Robot{
 							hasRequested = true;
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
 							showMsg("Err : sendUDP");
+							e.printStackTrace();
 						}
 					}
 					
@@ -106,8 +106,8 @@ public class iRobot extends Robot{
 						showMsg("Out");
 						hasRequested = false;
 					} catch (IOException e){
-						e.printStackTrace();
 						showMsg("err : SendUDP");
+						e.printStackTrace();
 					}
 				}
 				
@@ -120,7 +120,7 @@ public class iRobot extends Robot{
 				break;
 			default :
 				//default case
-				showMsg("Color : XXX");
+				//showMsg("Color : XXX");
 				df.forward();
 				break;				
 			}
@@ -139,8 +139,9 @@ public class iRobot extends Robot{
 				while(true){
 					//wait for a string formated as "IP;IP2;;..." with IP the ip address of all robot authorized to cross the crossroad
 					String tmp = wifi.receiveUDP(); //!! blocking method !!
+					//onl get the first chars because we received a byte[256]
 					tmp = tmp.substring(0, tmp.indexOf("\0"));
-					String[] str = tmp.split(";");
+					String[] str = tmp.split(";");//split by IP addresses
 					
 					//check if our ip address is contained in the packet we received
 					int i =0;
@@ -161,8 +162,8 @@ public class iRobot extends Robot{
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 				showMsg("Err : receiveUDP");
+				e.printStackTrace();
 			}
 		}
 
