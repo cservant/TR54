@@ -25,7 +25,7 @@ public class iRobot extends Robot{
 		
 		
 		showMsg("On the");
-		showMsg("highway to Hell");
+		showMsg("Highway to Hell");
 		//wait for touchsensor to be pressed before starting
 		while(!capteur.isPressed());
 		
@@ -55,7 +55,8 @@ public class iRobot extends Robot{
 				if(((System.nanoTime() - timer - delaytimer)) >= 2*1e9)
 				{
 					isBigBlue = !isBigBlue;
-					nRoad = (nRoad++) % 2;
+					if(isBigBlue)
+						nRoad = (nRoad1+) % 2;
 					point = opp.getPose().getLocation();
 					//showMsg("isBigB : " + isBigBlue);
 				}
@@ -66,6 +67,7 @@ public class iRobot extends Robot{
 				df.forward();
 				//if we are on the entry point of the main road (this road leads to a crossroad)	
 				if(isBigBlue && !stop){
+					showMsg("Road " + nRoad);
 					//send request for the crossroad
 					// "R" : request to enter the crossroad
 					// "O" : notification robot leaved the crossroad
@@ -73,6 +75,7 @@ public class iRobot extends Robot{
 						try {
 							//we send an UDP packet to our android device (hotspot wifi ip address is always the same)
 							wifi.sendUDP("192.168.43.1", "R");
+							showMsg("Request R"+nRoad);
 							hasRequested = true;
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -83,23 +86,24 @@ public class iRobot extends Robot{
 					
 					//showMsg("dist : " + opp.getPose().distanceTo(point));
 					//check if we are close to the crossroad
-					if(opp.getPose().distanceTo(point) >= 40)
+					if(opp.getPose().distanceTo(point) >= 20)
 					{
 						showMsg("Waiting for Auth");
 						//check isAuthorized to know if we received authorization from the server
 						while(!isAuthorized){
 							df.stop();
 						}
+						showMsg("Crossing...");
 						stop = true;
 					}
 					df.forward();
 				}
 				
 				//notify the server we get out of the crossroad
-				if(opp.getPose().distanceTo(point) >= 80){
-					showMsg("Out");
+				if(opp.getPose().distanceTo(point) >= 70){
 					try{
 						wifi.sendUDP("192.168.43.1", "O");
+						showMsg("Out");
 						hasRequested = false;
 					} catch (IOException e){
 						e.printStackTrace();
@@ -140,7 +144,7 @@ public class iRobot extends Robot{
 					
 					//check if our ip address is contained in the packet we received
 					int i =0;
-					while( (i < str.length] && !str[i].contains(id))
+					while( (i < str.length) && !str[i].contains(id))
 						i++;
 					
 					//if we didn't find our ip address
