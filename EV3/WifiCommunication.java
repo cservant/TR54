@@ -40,7 +40,7 @@ public class WifiCommunication {
 	public String receiveUDP() throws IOException{
 		
 		DatagramSocket datagramSocket = new DatagramSocket(this.port);
-		byte[] buffer = new byte[10];
+		byte[] buffer = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
 		datagramSocket.receive(packet);
