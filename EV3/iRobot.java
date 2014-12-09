@@ -18,6 +18,7 @@ public class iRobot extends Robot{
 	private boolean hasRequested = false; //boolean used to delay the wifi request
 	private int nRoad = 0; //id of the road
 	private String id = "192.168.43.129"; //Robot Ip address
+	private static final String SERVER_IP = "192.168.43.1"; 
 	
 	public void navigation() {
 		OdometryPoseProvider opp = new OdometryPoseProvider(df);
@@ -74,7 +75,7 @@ public class iRobot extends Robot{
 					if(!hasRequested){
 						try {
 							//we send an UDP packet to our android device (hotspot wifi ip address is always the same)
-							wifi.sendUDP("192.168.43.1", "R");
+							wifi.sendUDP(SERVER_IP, "R");
 							showMsg("Request R"+nRoad);
 							hasRequested = true;
 						} catch (IOException e) {
@@ -102,7 +103,7 @@ public class iRobot extends Robot{
 				//notify the server we get out of the crossroad
 				if(opp.getPose().distanceTo(point) >= 70){
 					try{
-						wifi.sendUDP("192.168.43.1", "O");
+						wifi.sendUDP(SERVER_IP, "O");
 						showMsg("Out");
 						hasRequested = false;
 					} catch (IOException e){
@@ -139,7 +140,7 @@ public class iRobot extends Robot{
 				while(true){
 					//wait for a string formated as "IP;IP2;;..." with IP the ip address of all robot authorized to cross the crossroad
 					String tmp = wifi.receiveUDP(); //!! blocking method !!
-					//onl get the first chars because we received a byte[256]
+					//only get the first chars because we received a byte[256]
 					tmp = tmp.substring(0, tmp.indexOf("\0"));
 					String[] str = tmp.split(";");//split by IP addresses
 					
