@@ -10,12 +10,12 @@ import lejos.utility.Delay;
 public class iRobot extends Robot{
 	private long timer = 0;
 	private long delaytimer = 0;
-	private boolean isBigBlue = true;
-	private boolean stop = false;
-	private Point point = new Point(0,0);
+	private boolean isBigBlue = true; //this boolean is used only for the road we have in practical work to detect the main roads
+	private boolean stop = false; //this boolean is used only for the road we have in practical work to stop the robot at the crossroad
+	private Point point = new Point(0,0); //this point will be updated as the entry point of the main roads
 	final private WifiCommunication wifi = new WifiCommunication();
-	private boolean isAuthorized = false;
-	private String id = "192.168.43.129";
+	private boolean isAuthorized = false; //boolean used in the wifipooler to check the current authorization of our robot
+	private String id = "192.168.43.129"; //Robot Ip address
 	
 	public void navigation() {
 		OdometryPoseProvider opp = new OdometryPoseProvider(df);
@@ -34,7 +34,7 @@ public class iRobot extends Robot{
 		//while all buttons are released
 		while (Button.readButtons() == 0) {
 			delaytimer = System.nanoTime();
-			//management of low range collisions
+			//management of close range detection
 			while(capteur.getDistance() <= 15)
 				df.stop();
 			delaytimer = System.nanoTime() - delaytimer;
@@ -61,13 +61,13 @@ public class iRobot extends Robot{
 					stop = false;
 				
 				df.forward();
-								
+				//if we are on the entry point of the main road (this road leads to a crossroad)	
 				if(isBigBlue && !stop){
-					
-					//send request for the shared zone
-					// "R" : request to enter the shared zone
-					// "O" : notification robot leaved the shared zone
+					//send request for the crossroad
+					// "R" : request to enter the crossroad
+					// "O" : notification robot leaved the crossroad
 					try {
+						//we send an UDP packet to our android device (hotspot wifi ip address is always the same)
 						wifi.sendUDP("192.168.43.1", "R");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
