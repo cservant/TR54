@@ -115,32 +115,31 @@ public class iRobot extends Robot{
 
 	class WifiPooler implements Runnable {
 
-		@Override
+	@Override
 		public void run() {
+			showMsg("WifiPooler on");
 			// TODO Auto-generated method stub
 			try {
 				while(true){
-					//wait for a string formated as "IP:AUTH;IP2;AUTH2;..." with IP the ip address of a robot and AUTH its authorization state {'A', 'R'}
-					showMsg("WifiPooler on");
-					String[] str = wifi.receiveUDP().split(";");
+					//wait for a string formated as "IP;IP2;;..." with IP the ip address of all robot authorized to cross the crossroad
+					String[] str = wifi.receiveUDP().split(";"); //!! blocking method !!
 					showMsg("WP : received UDP");
+					
+					//check if our ip address is contained in the packet we received
 					int i =0;
-					//get the ip address from the string which is the first part of the string
-					while(str[i].split(":")[0].compareTo(id) == 0)
+					while(!str[i].contains(id))
 						i++;
 					
-					showMsg(str[i]);
-					
-					if(str[i].split(":")[1].compareTo("A") == 0){
-						//we are authorized to go through the shared zone
-						showMsg("received Auth");
-						isAuthorized = true;
-					}
-					else{
-						//server refused to give us authorization
-						showMsg("refused Auth");
+					//if we didn't find our ip address
+					if(i >= str.length){
+						showMsg("Auth Denied");
 						isAuthorized = false;
+						continue;
 					}
+					
+					//otherwise we found our ip address
+					showMsg("received Auth");
+					isAuthorized = true;
 				}
 				
 			} catch (IOException e) {
@@ -149,6 +148,5 @@ public class iRobot extends Robot{
 				showMsg("Err : receiveUDP");
 			}
 		}
-
 	}
 }
