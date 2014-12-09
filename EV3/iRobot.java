@@ -16,6 +16,7 @@ public class iRobot extends Robot{
 	final private WifiCommunication wifi = new WifiCommunication();
 	private boolean isAuthorized = false; //boolean used in the wifipooler to check the current authorization of our robot
 	private boolean hasRequested = false; //boolean used to delay the wifi request
+	private int nRoad = 0; //id of the road
 	private String id = "192.168.43.129"; //Robot Ip address
 	
 	public void navigation() {
@@ -54,6 +55,7 @@ public class iRobot extends Robot{
 				if(((System.nanoTime() - timer - delaytimer)) >= 2*1e9)
 				{
 					isBigBlue = !isBigBlue;
+					nRoad = (nRoad++) % 2;
 					point = opp.getPose().getLocation();
 					//showMsg("isBigB : " + isBigBlue);
 				}
@@ -132,8 +134,9 @@ public class iRobot extends Robot{
 			try {
 				while(true){
 					//wait for a string formated as "IP;IP2;;..." with IP the ip address of all robot authorized to cross the crossroad
-					String[] str = wifi.receiveUDP().split(";"); //!! blocking method !!
-					showMsg("WP : received UDP");
+					String tmp = wifi.receiveUDP(); //!! blocking method !!
+					tmp = tmp.substring(0, tmp.indexOf("\0"));
+					String[] str = tmp.split(";");
 					
 					//check if our ip address is contained in the packet we received
 					int i =0;
