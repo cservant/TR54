@@ -90,18 +90,19 @@ public class iRobot extends Robot{
 						}
 						stop = true;
 					}
-					//notify the server we get out of the crossroad
-					if(opp.getPose().distanceTo(point) >= 80){
-						showMsg("Out");
-						try{
-							wifi.sendUDP("192.168.43.1", "O");
-							hasRequested = false;
-						} catch (IOException e){
-							e.printStackTrace();
-							showMsg("err : SendUDP");
-						}
-					}
 					df.forward();
+				}
+				
+				//notify the server we get out of the crossroad
+				if(opp.getPose().distanceTo(point) >= 80){
+					showMsg("Out");
+					try{
+						wifi.sendUDP("192.168.43.1", "O");
+						hasRequested = false;
+					} catch (IOException e){
+						e.printStackTrace();
+						showMsg("err : SendUDP");
+					}
 				}
 				
 				timer = System.nanoTime();
