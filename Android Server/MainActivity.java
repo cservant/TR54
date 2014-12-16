@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 					String address = packet.getAddress().toString();
 					String[] ipAddress = address.split("\\.");
 					
-					if(ipAddress[3] != "1"){ // Avoid reception of server's broadcasts. Server IP:192.168.43.1
+					if(!ipAddress[3].equals("1")){ // Avoid reception of server's broadcasts. Server IP:192.168.43.1
 						
 						buffer = packet.getData();
 						message = new String(buffer,"UTF-8");
