@@ -40,13 +40,13 @@ public class WifiCommunication {
 	public String receiveUDP() throws IOException{
 		
 		DatagramSocket datagramSocket = new DatagramSocket(this.port);
+		//we use an array of 256 bytes to store the data we received from our packet but it will be reduced then when we parse the data (cf class iRobot.Java:WifiPooler)
 		byte[] buffer = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
 		datagramSocket.receive(packet);
 		datagramSocket.close();
+		//convert byte array to a string
 		return new String(packet.getData(), "UTF-8");
-		
-		//return packet.getData();
 	}
 }

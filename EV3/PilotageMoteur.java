@@ -9,8 +9,8 @@ public class PilotageMoteur {
 	private RegulatedMotor motorRight = new EV3LargeRegulatedMotor(MotorPort.C);
 
 	public PilotageMoteur() {
-		// diametre - ecartement des roues - moteur gauch - moteur droit
-		// les deux premiers patrametre ont les meme unites
+		// diameter - distance between the 2 wheels - left motor - right motor
+		// the 2 first parameters should have the same units (in cm in our case)
 		df = new DifferentialPilot(5.6, 11.78, this.getMotorLeft(),
 				this.getMotorRight());
 	}
