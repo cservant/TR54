@@ -72,7 +72,9 @@ L'interface de l'application est très simple. L'application affiche l'IP et le 
     });
 
 ###Ordonnancement
-Le serveur gère les requêtes par séquence. La première arrivée est la première répondue. Cependant toutes les requêtes sont traitées. Deux listes sont maintenues sur le serveur. Une liste des robots autorisés et une liste contenant les robots en attente d'autorisation. (Donc ceux 
+La politique utilisée est la politique de séquence. Celle-ci est basée sur la création d’un ordre de passage qui doit être respecté. Grâce aux informations envoyées par les robots (voie, position etc.), le serveur définie la séquence en fonction des mouvements conflictuels entre les deux voies. En fonction de la séquence et des positions des véhicules, le serveur détermine quels véhicules sont autorisés à traverser l’intersection. La liste des véhicules autorisés est envoyée en mode « broadcast » aux véhicules présents dans l’intersection.
+
+Deux listes sont maintenues sur le serveur. Une liste des robots autorisés et une liste contenant les robots en attente d'autorisation. 
 
 Lorsqu'un robot demande l'accès à l'intersection, le serveur regarde si cette dernière est libre. Si elle est libre, le  robot reçoit l'autorisation.
 
