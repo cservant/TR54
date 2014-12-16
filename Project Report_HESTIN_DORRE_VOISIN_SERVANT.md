@@ -12,7 +12,7 @@ TODO : Image.
 Le circuit est tracé à l'aide de rubans adhésifs de couleurs noir, bleu et orange et d'un fond blanc. Celui-ci a la forme d'un huit. L’unique intersection est constituée de deux voies qui se croisent et qui seront appelées « voie 1 » et « voie 2 ». Chaque voie implique un mouvement rectiligne constant. De plus, chaque mouvement doit rencontrer trois zones : une zone de stockage, une zone de conflit puis une zone de sortie. En dehors des zones de stockage et de la zone de conflit, les robots se trouvent en « voie 0 » dans laquelle aucun processus de négociation n’est en cours.
 
 ##Robot LEGO MINDSTORMS EV3
-Pour ce projet nous avons à disposition des robots *LEGO MINDSTORMS EV3* et leurs briques de construction composés de :
+Pour ce projet nous avons à disposition des robots **LEGO MINDSTORMS EV3** et leurs briques de construction composés de :
 
 - La brique programmable.
 - Deux Grands moteurs.
@@ -26,10 +26,11 @@ Le mobile Android est présent pour faire office de point d'accès Wifi auprès 
 Une application a été créée pour récupérer les demandes des robots et gérer les autorisations d'accès à l'intersection.
 
 ##Environnement de développement
-Pour mener à bien nos développements, nous travaillons avec l'IDE Eclipse et un plugin *Lejos* qui nous fournit la partie *HAL* pour programmer les robots ainsi qu'une interface de connection a ceux ci.
+Pour mener à bien nos développements, nous travaillons avec l'IDE Eclipse et un plugin **Lejos** qui nous fournit la partie *HAL* pour programmer les robots ainsi qu'une interface de connection a ceux ci.
 
 ##Partie Véhicule Embarqué
 ###Politique de suivi
+La politique de suivi utilisée est celle du tout ou rien. Tant que le robot ne rencontre aucun obstacle à une certaine distance, il continue sa progression. Si un obstacle survient dans sa zone de détection, le robot s'arrêtera alors et attendra que la route soit dégagée. 
 
 ###Détection de couleur
 Lors de nos différentes expérimentations sur différents circuits, deux méthodes sont ressorties pour détecter les lignes :
@@ -50,7 +51,6 @@ A tout moment le robot tient à jour sa position sur le circut. Il sait quand il
 ###Interface
 L'interface de l'application est très simple. L'application affiche l'IP et le port sur lequel on créé les sockets. De plus, elle affiche les messages envoyés et reçus (adresse des recepteurs et des emetteurs). A chaque reception d'un message, le thread de l'activité courante est utilisé pour actualiser l'affichage :
 
-	// Update the UI
     MainActivity.this.runOnUiThread(new Runnable() {
     	@Override
     	public void run() {
@@ -59,17 +59,20 @@ L'interface de l'application est très simple. L'application affiche l'IP et le 
     });
 
 ###Ordonnancement
-Le serveur gère les requète par séquence. La première arrivée est la première répondue. Mais toutes les requètes sont traitées. Deux listes sont maintenues sur le serveur. Une liste des robots autorisés et une  la en attente d'autorisation. (Donc ceux 
+Le serveur gère les requêtes par séquence. La première arrivée est la première répondue. Cependant toutes les requêtes sont traitées. Deux listes sont maintenues sur le serveur. Une liste des robots autorisés et une liste contenant les robots en attente d'autorisation. (Donc ceux 
 
 Lorsqu'un robot demande l'accès à l'intersection, le serveur regarde si cette dernière est libre. Si elle est libre, le  robot reçoit l'autorisation.
 
 ##Problèmes rencontrés 
-- perte de temps pour charger les \*.jar sur les EV3 lorsque le Wi-Fi est actif. Solution: utiliser la commande **pscp -scp <nom du .jar> root@<robot ip>:/home/lejos/programs**
-- lorsque lui circuit est bombé/plié, le capteur se met à déconner, ce qui engendre un problème de suivi de ligne
-- lors de l'upload, il arrive que le fichier ait une taille de 0ko ce qui pose problème pour l'exécuter (impossible de supprimer un fichier ayant une taille de 0ko)
-- nombreux redémarrages des robots dû à un échec d'upload (perte de temps)
+- perte de temps pour charger les \*.jar sur les EV3 lorsque le Wi-Fi est actif. Solution: utiliser la commande **pscp -scp <nom du .jar> root@<robot ip>:/home/lejos/programs**.
+- lorsque le circuit est bombé ou plié, la piste est alors trop proche du capteur et la couleur detectée est faussée ce qui engendre un problème de suivi de ligne.
+- lors du chargement des fichiers sur le robot, il est arrivé que les fichiers soient corrompus et deviennent inaccessible sur le robot. ceux ci sont alors inexploitables et impossible à supprimer/remplacer.	
+Solution: générer un nouvel exécutable avec un nom différent de ceux sur le robot.
+- nombreux redémarrages des robots dûs à un échec de chargement (perte de temps).
 
 ##Conclusion
+Ce projet nous a permi de découvrir l'environnement **Lejos**. Nous avons été sensibilisé aux problématiques d'ordonnancement et d'interblocages. 
+Il nous a permi de réfléchir et de tester de nouvelles pôlitiques de suivi et de synchronisation des véhicules pour optimiser les temps de croisement et de parcours sans pour autant négliger la sécurité.
 
 ##Auteurs
 - Alexis Hestin
