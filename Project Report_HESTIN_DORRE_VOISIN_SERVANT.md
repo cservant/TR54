@@ -9,7 +9,7 @@ Dans le domaine de la robotique, les intersections sont gérées soit à travers
 L’objectif du projet est de créer une maquette d’intersection autonome. Il s’agit d’une intersection régulée à travers la communication sans-fil. La maquette est constituée d’une intersection, d'au moins trois véhicules et d’un régulateur représenté par notre mobile Android. Les robots doivent pouvoir effectuer plusieurs tours, sans collision ni interblocage.
 
 ##Circuit
-TODO : Image du circuit du PDF décrivant le projet.
+![Circuit](https://github.com/cservant/crossroad-synchronisation/blob/master/pictures/circuit.png)
 
 Le circuit est tracé à l'aide de rubans adhésifs de couleurs noir, bleu et orange et d'un fond blanc. Celui-ci a la forme d'un huit. L’unique intersection est constituée de deux voies qui se croisent et qui seront appelées « voie 1 » et « voie 2 ». Chaque voie implique un mouvement rectiligne constant. De plus, chaque mouvement doit rencontrer trois zones : une zone de stockage, une zone de conflit puis une zone de sortie. En dehors des zones de stockage et de la zone de conflit, les robots se trouvent en « voie 0 » dans laquelle aucun processus de négociation n’est en cours.
 
