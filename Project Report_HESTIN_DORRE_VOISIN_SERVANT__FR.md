@@ -52,8 +52,7 @@ En conséquences nous avons choisi de garder la méthode par détection de coule
 
 ###Communication Wifi
 Les robots communiquent via Wifi directement avec le *serveur Android*. 
-Le robot enregistre � chaque fois le point d'entr�e dans les voies principales. Il sait quand il arrive sur l'intersection et sur quelle voie il se trouve (voie 1 ou voie 2). Quand un robot arrive sur la ligne droite du croisement il envoie une requète d'autorisation au serveur. Par la suite un thread �coute en permanence les r�ponses du serveur et met � jour la permission du robot.
-
+Le robot enregistre à chaque fois le point d'entrée dans les voies principales. Il sait quand il arrive sur l'intersection et sur quelle voie il se trouve (voie 1 ou voie 2). Quand un robot arrive sur la ligne droite du croisement il envoie une requête d'autorisation au serveur. Par la suite un thread écoute en permanence les réponses du serveur et met à jour la permission du robot.
 
 ###Détection de l'intersection
 Afin de détecter l'intersection et donc de permettre de gérer les croisements des robots, nous utilisons l'odométrie. Grâce à l'odométrie, nous sauvegardons le point d'entrée dans la voie principale (menant à l'intersection) et nous calculons ensuite la distance parcourue depuis ce point. Dès que cette distance nous approche du point de l'intersection, nous considérons alors que nous entrons dans la zone de stockage et que nous sommes en attente de l'autorisation du serveur.
