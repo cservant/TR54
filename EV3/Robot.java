@@ -32,7 +32,7 @@ public abstract class Robot {
 	public abstract void navigation();
 
 	/**
-	 * Display a message on the first available line of the embedded 8x6 char screen of the robot.
+	 * Display a message on the first available line of the embedded 8x16 char screen of the robot.
 	 * If no lines are free then clear the screen and print the message on the first line again.
 	 */
 	public void showMsg(final String msg) {
