@@ -99,6 +99,7 @@ public class iRobot extends Robot{
 								wifi.sendUDP(SERVER_IP, "R");
 								showMsg("Request R"+nRoad); //display on the embedded screen the index of the road we are on
 								hasRequested = true;
+								//as we will take a bend then decrease the speed to minimize color detection faults
 								df.setTravelSpeed(TRAVEL_SPEED);
 							} catch (IOException e) {
 								showMsg("Err : sendUDP");
@@ -149,6 +150,8 @@ public class iRobot extends Robot{
 
 	/**
 	 * WifiPooler class : run as a new thread, manages the pooling of authorization from the android server by the wifi communication.
+	 * The authorization is shared between the two threads by the boolean isAuthorized.
+	 * This boolean is set by this class and read by the navigation method in the main thread.
 	 * Uses a blocking method to receive UDP packets.
 	 * @author 	Alexis HESTIN
 	 * 			Clément SERVANT
@@ -165,7 +168,7 @@ public class iRobot extends Robot{
 				while(true){
 					//wait for a string formated as "IP;IP2;;..." with IP the ip address of all robot authorized to cross the crossroad
 					String tmp = wifi.receiveUDP(); //!! blocking method !!
-					//only get the first chars because we received a byte[256]
+					//only get the first chars because we received a byte[256] ( cf WifiCommunication.java:WifiCommunication.receiveUDP() )
 					tmp = tmp.substring(0, tmp.indexOf("\0"));
 					String[] str = tmp.split(";");//split by IP addresses
 					
