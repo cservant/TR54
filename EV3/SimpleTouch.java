@@ -11,9 +11,7 @@ public class SimpleTouch extends AbstractFilter {
 
   public boolean isPressed() {
     super.fetchSample(sample, 0);
-    if (sample[0] == 0)
-      return false;
-    return true;
+    return (sample[0] != 0)
   }
 
 }

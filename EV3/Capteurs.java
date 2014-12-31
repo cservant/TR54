@@ -22,9 +22,7 @@ public class Capteurs {
 	}
 	
 	public boolean isColor(Color color){
-		if( colorSensor.getColorID() == color.getColor() )
-			return true;
-		return false;
+		return ( colorSensor.getColorID() == color.getColor() )
 	}
 	
 	public float getDistance(){
