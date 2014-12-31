@@ -86,14 +86,13 @@ public class MainActivity extends Activity {
 				});
 
 				while (true) {
-					DatagramSocket datagramSocketReceive = new DatagramSocket(SOCKET_SERVER_PORT);
+					final DatagramSocket datagramSocketReceive = new DatagramSocket(SOCKET_SERVER_PORT);
 					byte[] buffer = new byte[2];
 					final DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 					
 					datagramSocketReceive.receive(packet);
 					
-					String address = packet.getAddress().toString();
-					String[] ipAddress = address.split("\\.");
+					final String[] ipAddress = packet.getAddress().toString().split("\\.")
 					
 					if(!ipAddress[3].equals("1")){ // Avoid reception of server's broadcasts. Server IP:192.168.43.1
 						
