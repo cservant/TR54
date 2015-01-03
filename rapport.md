@@ -73,9 +73,9 @@ Lors de nos différentes expérimentations sur différents circuits, deux métho
 - détection par couleur en utilisant les constantes de couleur Lejos.
 - détection par luminance.
 
-La première méthode - la plus simple - permet un déploiement rapide et une détection globale des couleurs del'environnement. Néanmoins cette méthode est très sujette aux erreurs dues aux reflets sur les lignes ou encore à l'éclairage de la pièce.
+La première méthode - la plus simple - permet un déploiement rapide et une détection globale des couleurs de l'environnement. Néanmoins cette méthode est très sujette aux erreurs dues aux reflets sur les lignes ou encore à l'éclairage de la pièce.
 
-En ce qui concerne la seconde méthode, celle ci est bien plus fiable mais nécessite plusieurs tests expérimentaux pour parvenir à définir les luminances correspondants aux couleurs utilisés sur les lignes. Après cela, cette méthode est la plus fiable puisque l'environnement en changeant pas en salle de TP, les luminances non plus.
+En ce qui concerne la seconde méthode, celle ci est bien plus fiable mais nécessite plusieurs tests expérimentaux pour parvenir à définir les luminances correspondants aux couleurs utilisés sur les lignes. Après cela, cette méthode est la plus fiable puisque l'environnement ne changeant pas en salle de TP, les luminances non plus.
 Malheureusement cette méthode n'est valable que dans un environnement précis et ce une fois les valeurs réglées pour celui ci.
 
 En conséquences nous avons choisi de garder la méthode par détection de couleur pour assurer le suivi de ligne. Afin de minimiser les défauts dûs à l'éclairage et aux reflets, nous avons également fait le choix d'appliquer deux vitesse différentes au robot:	
@@ -105,7 +105,7 @@ L'interface de l'application est très simple. L'application affiche l'IP et le 
     });
 
 ##Ordonnancement
-La politique utilisée est la politique de séquence. Celle-ci est basée sur la création d’un ordre de passage qui doit être respecté. Grâce aux informations envoyées par les robots (voie, position etc.), le serveur définie la séquence en fonction des mouvements conflictuels entre les deux voies. En fonction de la séquence et des positions des véhicules, le serveur détermine quels véhicules sont autorisés à traverser l’intersection. La liste des véhicules autorisés est envoyée en mode « broadcast » aux véhicules présents dans l’intersection.
+La politique utilisée est la politique de séquence. Celle-ci est basée sur la création d’un ordre de passage qui doit être respecté. Grâce aux informations envoyées par les robots (voie, position etc.), le serveur définit la séquence en fonction des mouvements conflictuels entre les deux voies. En fonction de la séquence et des positions des véhicules, le serveur détermine quels véhicules sont autorisés à traverser l’intersection. La liste des véhicules autorisés est envoyée en mode « broadcast » aux véhicules présents dans l’intersection.
 
 Deux listes sont maintenues sur le serveur. Une liste des robots autorisés et une liste contenant les robots en attente d'autorisation. 
 
